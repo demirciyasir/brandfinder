@@ -1,6 +1,6 @@
 from generator import generate_names
 from github_checker import is_available
-
+from domain_checker import check_domains
 
 def main():
     print("BrandFinder v1.0\n")
@@ -11,7 +11,16 @@ def main():
 
     for name in names:
         if is_available(name):
-            print(f"✅ {name}")
+            domains = check_domains(name)
+
+available_domains = [
+    d for d, ok in domains.items() if ok
+]
+
+if available_domains:
+    print(f"✅ {name}  ->  {', '.join(available_domains)}")
+else:
+    print(f"❌ {name}  (Domain yok)")
             available.append(name)
         else:
             print(f"❌ {name}")
